@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <!-- 1. Создаем таблицы без FK -->
+
+    <changeSet id="001-create-department-table" author="georgii">
+        <createTable tableName="department">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="changed_by_task_id" type="BIGINT"/>
+            <column name="change_date" type="TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="002-create-work-group-table" author="georgii">
+        <createTable tableName="work_group">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="changed_by_task_id" type="BIGINT"/>
+            <column name="change_date" type="TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="003-create-worker-table" author="georgii">
+        <createTable tableName="worker">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="full_name" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="department_id" type="BIGINT" />
+            <column name="group_id" type="BIGINT"/>
+            <column name="birth_date" type="DATE"/>
+            <column name="changed_by_task_id" type="BIGINT"/>
+            <column name="change_date" type="TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="004-create-task-table" author="georgii">
+        <createTable tableName="task">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="version" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(1000)"/>
+            <column name="execute_time" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_executed" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="005-create-employee-transfer-task-table" author="georgii">
+        <createTable tableName="employee_transfer_task">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="worker_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="new_department_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+
+    <!-- 2. Добавляем все FK в конце -->
+
+    <changeSet id="101-add-fk-department-task" author="georgii">
+        <addForeignKeyConstraint
+                baseTableName="department"
+                baseColumnNames="changed_by_task_id"
+                referencedTableName="task"
+                referencedColumnNames="id"
+                constraintName="fk_department_changed_by_task"/>
+    </changeSet>
+
+    <changeSet id="102-add-fk-work-group-task" author="georgii">
+        <addForeignKeyConstraint
+                baseTableName="work_group"
+                baseColumnNames="changed_by_task_id"
+                referencedTableName="task"
+                referencedColumnNames="id"
+                constraintName="fk_work_group_changed_by_task"/>
+    </changeSet>
+
+    <changeSet id="103-add-fk-worker-department" author="georgii">
+        <addForeignKeyConstraint
+                baseTableName="worker"
+                baseColumnNames="department_id"
+                referencedTableName="department"
+                referencedColumnNames="id"
+                constraintName="fk_worker_department"/>
+    </changeSet>
+
+    <changeSet id="104-add-fk-worker-group" author="georgii">
+        <addForeignKeyConstraint
+                baseTableName="worker"
+                baseColumnNames="group_id"
+                referencedTableName="work_group"
+                referencedColumnNames="id"
+                constraintName="fk_worker_group"/>
+    </changeSet>
+
+    <changeSet id="105-add-fk-worker-changed-by-task" author="georgii">
+        <addForeignKeyConstraint
+                baseTableName="worker"
+                baseColumnNames="changed_by_task_id"
+                referencedTableName="task"
+                referencedColumnNames="id"
+                constraintName="fk_worker_changed_by_task"/>
+    </changeSet>
+
+    <changeSet id="106-add-fk-ett-task" author="georgii">
+        <addForeignKeyConstraint
+                baseTableName="employee_transfer_task"
+                baseColumnNames="id"
+                referencedTableName="task"
+                referencedColumnNames="id"
+                constraintName="fk_ett_task"/>
+    </changeSet>
+
+    <changeSet id="107-add-fk-ett-worker" author="georgii">
+        <addForeignKeyConstraint
+                baseTableName="employee_transfer_task"
+                baseColumnNames="worker_id"
+                referencedTableName="worker"
+                referencedColumnNames="id"
+                constraintName="fk_ett_worker"/>
+    </changeSet>
+
+    <changeSet id="108-add-fk-ett-department" author="georgii">
+        <addForeignKeyConstraint
+                baseTableName="employee_transfer_task"
+                baseColumnNames="new_department_id"
+                referencedTableName="department"
+                referencedColumnNames="id"
+                constraintName="fk_ett_department"/>
+    </changeSet>
+
+</databaseChangeLog>

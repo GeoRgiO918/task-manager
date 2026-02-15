@@ -1,4 +1,4 @@
 package com.georgiiHadzhiev.entity;
 
-public enum TaskType {
+public enum GroupStatus {
 }

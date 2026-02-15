@@ -1,9 +1,5 @@
 package com.georgiiHadzhiev.dto;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.georgiiHadzhiev.entity.TaskType;
-
 import java.time.Instant;
 
 public class TaskCreateRequest {

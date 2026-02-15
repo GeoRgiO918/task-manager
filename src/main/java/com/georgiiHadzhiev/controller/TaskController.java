@@ -2,21 +2,32 @@ package com.georgiiHadzhiev.controller;
 
 import com.georgiiHadzhiev.dto.TaskCreateRequest;
 import com.georgiiHadzhiev.dto.TaskDto;
+import com.georgiiHadzhiev.service.TaskService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/tasks")
 public class TaskController {
 
+    private final TaskService taskService;
+
+    public TaskController(TaskService taskService) {
+        this.taskService = taskService;
+    }
 
     @PostMapping()
-    public ResponseEntity<TaskDto> createTask(@RequestBody TaskCreateRequest request) throws Exception {
-        request = request;
-        return ResponseEntity.ok().build();
+    public ResponseEntity<TaskDto> createTask(@RequestBody TaskCreateRequest request) {
+        TaskDto dto = taskService.createTask(request);;
+        return ResponseEntity.status(HttpStatus.CREATED).body(dto);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<TaskDto> getTask(@PathVariable Long id){
+        TaskDto dto = taskService.getTask(id);
+        if(dto == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(dto);
     }
 
 }

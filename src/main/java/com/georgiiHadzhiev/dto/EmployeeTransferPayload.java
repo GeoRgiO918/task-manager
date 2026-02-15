@@ -21,8 +21,5 @@ public class EmployeeTransferPayload extends TaskPayload{
         this.departmentId = departmentId;
     }
 
-    public EmployeeTransferPayload(Long workerId, Long departmentId) {
-        this.workerId = workerId;
-        this.departmentId = departmentId;
-    }
+
 }

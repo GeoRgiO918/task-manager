@@ -1,15 +1,28 @@
-package com.georgiiHadzhiev.dto;
+package com.georgiiHadzhiev.entity.task;
 
+import javax.persistence.*;
 import java.time.Instant;
 
-public class TaskDto {
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Task {
 
-    private long id;
-    private long version;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    private Long id;
+
+    @Version
+    @Column(name = "version")
+    private Long version;
+
+    @Column(name = "description")
     private String description;
+
+    @Column(name = "execute_time",nullable = false)
     private Instant executeTime;
-    private boolean isExecuted;
-    private TaskPayload payload;
+
+    @Column(name = "is_executed",nullable = false)
+    private Boolean isExecuted =false;
 
     public Long getId() {
         return id;
@@ -43,19 +56,11 @@ public class TaskDto {
         this.executeTime = executeTime;
     }
 
-    public boolean isExecuted() {
+    public Boolean getIsExecuted() {
         return isExecuted;
     }
 
-    public void setExecuted(boolean executed) {
-        this.isExecuted = executed;
-    }
-
-    public TaskPayload getPayload() {
-        return payload;
-    }
-
-    public void setPayload(TaskPayload payload) {
-        this.payload = payload;
+    public void setIsExecuted(Boolean isExecuted) {
+        this.isExecuted = isExecuted;
     }
 }
