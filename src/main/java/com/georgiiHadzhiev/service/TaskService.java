@@ -6,6 +6,8 @@ import com.georgiiHadzhiev.dto.TaskCreateRequest;
 import com.georgiiHadzhiev.dto.TaskDto;
 import com.georgiiHadzhiev.entity.task.Task;
 import com.georgiiHadzhiev.repository.TaskRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,5 +40,9 @@ public class TaskService {
         Optional<Task> task = repository.findById(id);
         return task.map(value -> mapperRegistry.getStrategyByTaskType(value.getClass()).toDto(value)).orElse(null);
 
+    }
+    public Page<TaskDto> getAll(Pageable pageable){
+        Page<Task> taskPage = repository.findAll(pageable);
+        return taskPage.map(task -> mapperRegistry.getStrategyByTaskType(task.getClass()).toDto(task));
     }
 }
