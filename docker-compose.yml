@@ -1,0 +1,14 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: taskmanager_postgres
+    env_file:
+      - .env
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
