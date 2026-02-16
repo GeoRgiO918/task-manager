@@ -15,7 +15,7 @@ public class Task {
     @Column(name = "version")
     private Long version;
 
-    @Column(name = "description")
+    @Column(name = "description",length = 1000)
     private String description;
 
     @Column(name = "execute_time",nullable = false)
@@ -23,6 +23,16 @@ public class Task {
 
     @Column(name = "is_executed",nullable = false)
     private Boolean isExecuted =false;
+
+    @Column(name = "executed_at",nullable = false)
+    private Instant executedAt;
+
+    @Column(name = "task_status",nullable = false,length = 50)
+    @Enumerated(EnumType.STRING)
+    private TaskStatus taskStatus = TaskStatus.SCHEDULED;
+
+    @Column(name = "error_text",length = 500)
+    private String errorText;
 
     public Long getId() {
         return id;
@@ -62,5 +72,37 @@ public class Task {
 
     public void setIsExecuted(Boolean isExecuted) {
         this.isExecuted = isExecuted;
+    }
+
+    public Boolean getExecuted() {
+        return isExecuted;
+    }
+
+    public void setExecuted(Boolean executed) {
+        isExecuted = executed;
+    }
+
+    public Instant getExecutedAt() {
+        return executedAt;
+    }
+
+    public void setExecutedAt(Instant executedAt) {
+        this.executedAt = executedAt;
+    }
+
+    public TaskStatus getTaskStatus() {
+        return taskStatus;
+    }
+
+    public void setTaskStatus(TaskStatus taskStatus) {
+        this.taskStatus = taskStatus;
+    }
+
+    public String getErrorText() {
+        return errorText;
+    }
+
+    public void setErrorText(String errorText) {
+        this.errorText = errorText;
     }
 }
