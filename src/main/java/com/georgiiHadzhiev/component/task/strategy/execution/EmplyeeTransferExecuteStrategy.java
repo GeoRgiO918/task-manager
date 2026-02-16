@@ -40,6 +40,8 @@ public class EmplyeeTransferExecuteStrategy implements TaskExecuteStrategy{
         Department department = departmentRepository.findById(transferTask.getNewDepartment().getId())
                 .orElseThrow(() -> new IllegalStateException("Department not found"));
         worker.setDepartment(department);
+        worker.setChangedByTask(task);
+        worker.setChangeDate(Instant.now());
         workerRepository.save(worker);
         task.setExecutedAt(Instant.now());
         task.setTaskStatus(TaskStatus.COMPLETED);

@@ -13,4 +13,78 @@
         </insert>
     </changeSet>
 
+    <!-- ====================== Departments ====================== -->
+    <changeSet id="2-create-departments" author="georgii">
+        <insert tableName="department">
+            <column name="id" valueNumeric="1"/>
+            <column name="name" value="HR"/>
+        </insert>
+        <insert tableName="department">
+            <column name="id" valueNumeric="2"/>
+            <column name="name" value="IT"/>
+        </insert>
+        <insert tableName="department">
+            <column name="id" valueNumeric="3"/>
+            <column name="name" value="Finance"/>
+        </insert>
+    </changeSet>
+
+    <!-- ====================== Work Groups ====================== -->
+    <changeSet id="3-create-groups" author="georgii">
+        <insert tableName="work_group">
+            <column name="id" valueNumeric="1"/>
+            <column name="name" value="Alpha"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="work_group">
+            <column name="id" valueNumeric="2"/>
+            <column name="name" value="Beta"/>
+            <column name="status" value="INACTIVE"/>
+        </insert>
+        <insert tableName="work_group">
+            <column name="id" valueNumeric="3"/>
+            <column name="name" value="Gamma"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+    </changeSet>
+
+    <!-- ====================== Workers ====================== -->
+    <changeSet id="4-create-workers" author="georgii">
+        <insert tableName="worker">
+            <column name="id" valueNumeric="1"/>
+            <column name="full_name" value="Alice Smith"/>
+            <column name="department_id" valueNumeric="1"/>
+            <column name="group_id" valueNumeric="1"/>
+            <column name="birth_date" valueDate="1990-05-12"/>
+        </insert>
+        <insert tableName="worker">
+            <column name="id" valueNumeric="2"/>
+            <column name="full_name" value="Bob Johnson"/>
+            <column name="department_id" valueNumeric="2"/>
+            <column name="group_id" valueNumeric="2"/>
+            <column name="birth_date" valueDate="1985-08-23"/>
+        </insert>
+        <insert tableName="worker">
+            <column name="id" valueNumeric="3"/>
+            <column name="full_name" value="Carol Williams"/>
+            <column name="department_id" valueNumeric="3"/>
+            <column name="group_id" valueNumeric="3"/>
+            <column name="birth_date" valueDate="1992-11-01"/>
+        </insert>
+        <insert tableName="worker">
+            <column name="id" valueNumeric="4"/>
+            <column name="full_name" value="David Brown"/>
+            <column name="department_id" valueNumeric="1"/>
+            <column name="group_id" valueNumeric="3"/>
+            <column name="birth_date" valueDate="1988-02-17"/>
+        </insert>
+        <insert tableName="worker">
+            <column name="id" valueNumeric="5"/>
+            <column name="full_name" value="Eva Davis"/>
+            <column name="department_id" valueNumeric="2"/>
+            <column name="group_id" valueNumeric="1"/>
+            <column name="birth_date" valueDate="1995-07-30"/>
+        </insert>
+    </changeSet>
+
 </databaseChangeLog>
