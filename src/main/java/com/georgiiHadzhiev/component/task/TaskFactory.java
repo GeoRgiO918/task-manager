@@ -4,6 +4,7 @@ import com.georgiiHadzhiev.component.task.strategy.creation.TaskCreateRegistry;
 import com.georgiiHadzhiev.component.task.strategy.creation.TaskCreateStrategy;
 import com.georgiiHadzhiev.dto.TaskCreateRequest;
 import com.georgiiHadzhiev.entity.task.Task;
+import com.georgiiHadzhiev.entity.task.TaskStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +25,10 @@ public class TaskFactory {
 
         TaskCreateStrategy createStrategy = creationRegistry.getStrategyByPayloadType(request.getPayload().getClass());
         Task task = createStrategy.create(request);
+        task.setExecuteTime(request.getExecuteTime());
+        task.setIsExecuted(false);
+        task.setDescription(request.getDescription());
+        task.setTaskStatus(TaskStatus.SCHEDULED);
         return task;
     }
 

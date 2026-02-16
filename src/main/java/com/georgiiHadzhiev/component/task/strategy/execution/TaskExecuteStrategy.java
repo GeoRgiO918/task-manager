@@ -7,4 +7,5 @@ public interface TaskExecuteStrategy {
     public void execute(Task task);
 
     public Class<? extends Task> getSupportedType();
+
 }

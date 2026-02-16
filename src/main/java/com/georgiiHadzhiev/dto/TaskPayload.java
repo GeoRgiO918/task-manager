@@ -9,7 +9,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         property = "type"
 )
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = EmployeeTransferPayload.class, name = "EMPLOYEE_TRANSFER")
+        @JsonSubTypes.Type(value = EmployeeTransferPayload.class, name = "EMPLOYEE_TRANSFER"),
+        @JsonSubTypes.Type(value = LoggingPayload.class, name = "LOGGING")
 })
 public abstract class TaskPayload {
 }

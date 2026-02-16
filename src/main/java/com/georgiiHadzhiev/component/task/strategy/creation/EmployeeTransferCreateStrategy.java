@@ -31,16 +31,12 @@ public class EmployeeTransferCreateStrategy implements TaskCreateStrategy {
             throw new IllegalArgumentException("Invalid payload type for EmployeeTransferTask");
         }
         EmployeeTransferPayload payload = (EmployeeTransferPayload)request.getPayload();
-        task.setDescription(request.getDescription());
         Department department = departmentRepository.findById(payload.getDepartmentId())
                 .orElseThrow(() -> new EntityNotFoundException("Department not found"));
         Worker worker = workerRepository.findById(payload.getWorkerId())
                 .orElseThrow(() -> new EntityNotFoundException("Worker not found"));;
         task.setNewDepartment(department);
         task.setWorker(worker);
-        task.setExecuteTime(request.getExecuteTime());
-        task.setIsExecuted(false);
-
         return task;
     }
 

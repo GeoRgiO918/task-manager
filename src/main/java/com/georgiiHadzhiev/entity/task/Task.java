@@ -74,10 +74,6 @@ public class Task {
         this.isExecuted = isExecuted;
     }
 
-    public Boolean getExecuted() {
-        return isExecuted;
-    }
-
     public void setExecuted(Boolean executed) {
         isExecuted = executed;
     }
