@@ -1,15 +1,22 @@
 package com.georgiiHadzhiev.dto;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.Instant;
 
 public class TaskCreateRequest {
 
 
-    Instant executeTime;
+    @NotNull(message = "executeTime cannot be null")
+    private Instant executeTime;
 
-    TaskPayload payload;
+    @NotNull(message = "payload cannot be null")
+    @Valid
+    private TaskPayload payload;
 
-    String description;
+    @Size(max = 1000, message = "description must be at most 500 characters")
+    private String description;
 
     public Instant getExecuteTime() {
         return executeTime;

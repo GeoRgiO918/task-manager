@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/tasks")
 public class TaskController {
@@ -20,7 +22,7 @@ public class TaskController {
     }
 
     @PostMapping()
-    public ResponseEntity<TaskDto> createTask(@RequestBody TaskCreateRequest request) {
+    public ResponseEntity<TaskDto> createTask(@Valid @RequestBody TaskCreateRequest request) {
         TaskDto dto = taskService.createTask(request);;
         return ResponseEntity.status(HttpStatus.CREATED).body(dto);
     }
