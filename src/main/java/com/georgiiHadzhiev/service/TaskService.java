@@ -45,4 +45,8 @@ public class TaskService {
         Page<Task> taskPage = repository.findAll(pageable);
         return taskPage.map(task -> mapperRegistry.getStrategyByTaskType(task.getClass()).toDto(task));
     }
+
+    public void deleteTask(Long id){
+        repository.deleteById(id);
+    }
 }
